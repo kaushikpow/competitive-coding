@@ -11,4 +11,4 @@
 // console.log(memo);
 // console.log(map);
 
-console.log(11111 + Infinity);
+console.log("kaushik");
