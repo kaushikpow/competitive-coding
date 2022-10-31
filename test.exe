@@ -1,0 +1,11 @@
+# 1 "C:\\Programming\\coding\\test.c"
+
+
+
+int a;
+short b;
+long c;
+float d;
+double e;
+char f;
+bool g;

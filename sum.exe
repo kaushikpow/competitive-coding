@@ -1,0 +1,77 @@
+# 1 "C:\\Programming\\coding\\sum.cpp"
+
+
+
+
+
+
+#pragma GCC target ("avx")
+
+using namespace std;
+
+
+double  sum(double  *arr)
+{
+   
+    double  sum = 0;
+    for (int i = 0; i < 10000 ; i++)
+
+        sum += arr[i];
+    return sum;
+}
+
+double sum_vectorized(double *arr)
+{
+    __m256d a_simd;
+    
+    __m256d sum = _mm256_setzero_pd();
+    double  bitsum[8];
+     
+    for (int i = 0; i < 10000 ; i += 8)
+         
+{
+                  a_simd = _mm256_loadu_pd(&arr[i]);
+
+                  sum = _mm256_add_pd(sum,a_simd);
+                  sum = _mm256_add_pd(sum,a_simd);
+ }
+ 
+    
+    _mm256_storeu_pd((double *)bitsum,sum);
+    return (bitsum[0] + bitsum[1] + bitsum[2] + bitsum[3] + bitsum[4] + bitsum[5] + bitsum[6] + bitsum[7]);
+}
+
+int main()
+{
+
+        double  arr[10000 ];
+        for (int i = 0; i < 10000 ; i++)
+                arr[i] = 1.0;
+
+        double time1 = 0.0;
+        double time2 = 0.0;
+        clock_t start = clock();
+
+        cout<<"sum = "<< sum(arr) <<"\n";
+    
+
+        clock_t end = clock();
+        time1 += (double)(end - start) / CLOCKS_PER_SEC;
+        
+        cout<<"Time elpased is "<<fixed<<time1<<" seconds for naive sum"<<"\n";
+        
+        start = clock();
+
+  
+        cout<<"sum = "<< sum_vectorized(arr) <<"\n";
+
+        end = clock();
+        time2 += (double)(end - start) / CLOCKS_PER_SEC;
+
+        
+        cout<<"Time elpased is "<<fixed<<time2<<" seconds for 128 bit vectorized sum"<<"\n";
+
+        
+        cout<< time1/time2 << "times faster."<<"\n"; 
+        return 0;
+}
