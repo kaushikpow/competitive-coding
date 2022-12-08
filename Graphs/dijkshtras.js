@@ -43,7 +43,6 @@ class Graph {
           pq.enqueue([edge[0], values[edge[0]]]);
         }
       }
-      console.log(pq);
     }
 
     for (let i = 1; i < this.size; i++) {
