@@ -19,8 +19,6 @@ class Graph {
       if (!visited[i]) this.dfs(i, visited, dp);
     }
 
-    console.log(dp);
-
     return Math.max(...dp);
   }
 
@@ -41,6 +39,5 @@ graph.addEdge(1, 3);
 graph.addEdge(3, 2);
 graph.addEdge(2, 4);
 graph.addEdge(3, 4);
-console.log(graph.adj);
 let longest_path = graph.longestPath();
-console.log(longest_path);
+console.log("The longest path is " + longest_path);

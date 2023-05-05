@@ -1,5 +1,6 @@
 import { PriorityQueue } from "@datastructures-js/priority-queue";
 
+//TC - O(nlogn); with priority queue
 class Graph {
   constructor(size) {
     this.size = size;
@@ -11,7 +12,7 @@ class Graph {
     this.adj[u].push([v, value]);
   }
 
-  prims_mst(start_node) {
+  prims_mst() {
     let parent = [-1];
     let mst = new Array(this.size).fill(false);
 
@@ -32,7 +33,7 @@ class Graph {
           //edge[0] has node and edge[1] has weight of it from u
           //if that node is not is visited and the value of that node is greater than the current weight,enter the block
           console.log(edge);
-          //update the parent as u  for that node
+          //update the parent as u for that node
           parent[edge[0]] = u;
           //now update the values array to the weight of this current edge
           values[edge[0]] = edge[1];

@@ -1,29 +1,48 @@
-class Node {
-  constructor(value) {
-    this.value = value;
-    this.left = this.right = null;
+class Graph {
+  constructor(n) {
+    this.adj = new Array(n).fill(0);
+
+    for (let i = 0; i < n; i++) {
+      this.adj[i] = [];
+    }
+  }
+
+  addEdge(u, v) {
+    this.adj[u].push(v);
+  }
+
+  bfs(node, visited) {
+    let queue = [];
+    queue.push(node);
+    visited[node] = 1;
+    while (queue.length) {
+      let temp = queue.shift();
+      console.log(temp);
+      for (let nodes of this.adj[temp].values()) {
+        if (!visited[nodes]) queue.push(nodes);
+        visited[nodes] = 1;
+      }
+    }
+  }
+
+  dfs(node, visited) {
+    visited[node] = 1;
+    console.log(node);
+    for (let nodes of this.adj[node].values()) {
+      if (visited[nodes] != 1) this.dfs(nodes, visited);
+    }
   }
 }
 
-let root = new Node(1);
-root.left = new Node(2);
-root.right = new Node(3);
-root.left.left = new Node(4);
-root.left.right = new Node(5);
-root.right.left = new Node(6);
-root.right.right = new Node(7);
+let visited = new Array(4).fill(0);
+let g = new Graph(4);
+g.addEdge(0, 1);
+g.addEdge(0, 2);
+g.addEdge(1, 2);
+g.addEdge(2, 0);
+g.addEdge(2, 3);
+g.addEdge(3, 3);
 
-function find_max(root) {
-  let arr = [root.value];
-  maximum(root, arr);
-  return arr[0];
-}
+// g.bfs(node, visited);
 
-function maximum(root, arr) {
-  if (root == null) return;
-  maximum(root.left, arr);
-  if (root.value > arr[0]) arr[0] = root.value;
-  maximum(root.right, arr);
-}
-
-console.log(find_max(root));
+g.bfs(2, visited);
